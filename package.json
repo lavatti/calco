@@ -8,6 +8,7 @@
   },
   "scripts": {
     "setup": "node scripts/setup.mjs",
+    "codex": "node scripts/codex.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -17,7 +18,9 @@
     "verify": "astro check && eslint . && astro build",
     "deploy": "astro build && wrangler deploy",
     "cf:preview": "astro build && wrangler dev",
-    "assets:download": "node scripts/download-assets.mjs"
+    "assets:download": "node scripts/download-assets.mjs",
+    "browser:capture": "node scripts/inspection/browser-capture.mjs",
+    "clone:smoke": "node scripts/inspection/clone-smoke.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
@@ -32,6 +35,7 @@
     "@typescript-eslint/parser": "^8.62.1",
     "eslint": "^10.6.0",
     "eslint-plugin-astro": "^1.7.0",
+    "playwright": "^1.64.1",
     "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.0",

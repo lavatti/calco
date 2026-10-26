@@ -51,6 +51,7 @@ Honor any user-provided instructions over these defaults.
 1. **Browser automation required.** Confirm Playwright MCP is available (`browser_*` tools).
    If not, ask the user to connect it. This skill cannot work without it.
 2. Parse `$ARGUMENTS` as URL(s); normalize/validate; verify each is reachable.
+   Record the agreed page scope as a route inventory. One URL produces one page unless additional routes are explicitly in scope; never call a homepage snapshot a whole-site clone.
 3. Verify the base builds: `npm run build`. The Astro + Tailwind v4 scaffold is already in
    place (`src/layouts/BaseLayout.astro`, `src/styles/global.css`, `src/pages/index.astro`).
 4. Create per-host output dirs: `docs/research/<host>/components/`, `docs/design-references/<host>/`.
@@ -184,6 +185,7 @@ Delegate to the **`design-critic`** agent. Do NOT declare done before this:
 - For each discrepancy: if the spec was wrong, re-extract and update it; if the build diverged
   from a correct spec, fix the component.
 - Test every interaction: scroll, click each tab/button, hover; confirm transitions feel right.
+- Against the local preview, run `npm run clone:smoke -- <config.json>` with the captured route inventory and site-specific desktop/mobile navigation journeys. A failed route or journey blocks a working-clone claim. `npm run verify` checks code and build, not browser behavior.
 - Optionally run `code-reviewer` on the final diff before committing.
 
 ## Pre-dispatch checklist
@@ -242,7 +244,7 @@ Delegate to the **`design-critic`** agent. Do NOT declare done before this:
 
 ## Completion report
 
-Sections built · components created · spec files written (should match) · assets downloaded
-· `npm run build` status · visual QA results · known gaps.
+Routes captured and built · sections/components/specs · assets downloaded · `npm run build`
+status · `clone:smoke` route and journey results · visual QA · known gaps.
 
 To ship: `npm run verify` then `npm run deploy` (or the `/deploy` command).

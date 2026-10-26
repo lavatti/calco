@@ -11,8 +11,9 @@ is dead; Tailwind is wired via `@tailwindcss/vite`).
 
 **Calco** (Spanish: an exact copy, a tracing) — a reusable kit for reverse-engineering **any**
 website into a clean, static Astro codebase that deploys to Cloudflare in one command. Start a
-clone with `/clone-website <url1> [<url2> ...]`. A finished example clone lives in
-`examples/tailwindcss.com/` and auto-deploys to GitHub Pages as the public demo.
+clone with `$clone-website <url1> [<url2> ...]` in Codex or `/clone-website` in Claude Code.
+A finished example clone lives in
+`examples/tailwindcss.com/`; the linked public demo is maintained by upstream.
 
 ## Tech stack
 
@@ -58,7 +59,7 @@ clone with `/clone-website <url1> [<url2> ...]`. A finished example clone lives 
 1. **Think before coding** — state assumptions; ask when uncertain rather than guessing.
 2. **Simplicity first** — minimum code that solves the problem; nothing speculative.
 3. **Surgical changes** — touch only what you must; don't refactor unrelated code.
-4. **Goal-driven** — define success (matches spec + `astro check` passes) and loop to it.
+4. **Goal-driven** — define success from the agreed route inventory, visual comparison, and browser journeys; a successful build alone is insufficient.
 
 ## Token economy (do this)
 
@@ -70,7 +71,7 @@ clone with `/clone-website <url1> [<url2> ...]`. A finished example clone lives 
 
 ## The clone system
 
-Orchestrated by the `/clone-website` skill. **Source-first:** capture the target's real
+Orchestrated by the agent-native `clone-website` skill. **Source-first:** capture the target's real
 HTML/CSS first (`fetch-source.mjs`), rebuild the GLOBAL FRAME, then reconstruct sections from
 the real markup — preserve exact classes, reproduce personality (SVG/CSS) as code, never as a
 screenshot. Flow: capture → frame → sections → assemble → QA.
@@ -83,6 +84,12 @@ screenshot. Flow: capture → frame → sections → assemble → QA.
   `/commit`, `/qa`, `/refine`, `/deploy`.
 - **Reusable workflow:** `.claude/workflows/clone-sections.js` (frame + sections batched at 3,
   auto-retry on failure).
+- **Runtime gate:** `npm run clone:smoke -- <config.json>` checks the captured route inventory and named desktop/mobile browser journeys against the local preview. A passing Astro build does not prove route coverage or navigation.
+- **Codex adapter:** `.agents/skills/clone-website/SKILL.md` uses the same deterministic
+  scripts and Astro scaffold directly. `.codex/config.toml` supplies Playwright and Context7
+  MCP servers when the repository is trusted. `npm run codex` supplies Playwright MCP immediately
+  for a new checkout. Do not run the Claude-specific workflow file
+  in Codex; it depends on Claude agent globals. Codex does not require Claude Code.
 - **Extraction manual:** `docs/research/INSPECTION_GUIDE.md` (loaded on demand, not every session).
 
 ## Parallelism & worktrees
@@ -106,7 +113,7 @@ docs/
   research/         # INSPECTION_GUIDE.md, templates/, <host>/ (DESIGN, BEHAVIORS, specs)
   design-references/# screenshots (<host>/)
 examples/
-  tailwindcss.com/  # finished demo clone (self-contained Astro app, deployed to GitHub Pages)
+  tailwindcss.com/  # finished demo clone (self-contained Astro app)
 scripts/
   inspection/       # extract-styles.js, discover-assets.js, rgb-to-oklch.mjs
   download-assets.mjs

@@ -1,0 +1,30 @@
+{
+  "baseUrl": "http://127.0.0.1:4321/",
+  "routesFile": "../capture/pages.json",
+  "outDir": "smoke-results",
+  "minRoutes": 2,
+  "minDistinctBodies": 2,
+  "journeys": [
+    {
+      "name": "desktop navigation example",
+      "path": "/",
+      "viewport": { "width": 1440, "height": 900 },
+      "visible": ["header nav"],
+      "hidden": [".loading-overlay"],
+      "steps": [
+        { "type": "click", "selector": "header nav a[href='/about']" }
+      ],
+      "expectPath": "/about"
+    },
+    {
+      "name": "mobile navigation example",
+      "path": "/",
+      "viewport": { "width": 390, "height": 844 },
+      "steps": [
+        { "type": "click", "selector": "button[aria-label='Menu']" },
+        { "type": "click", "selector": "nav a[href='/about']" }
+      ],
+      "expectPath": "/about"
+    }
+  ]
+}

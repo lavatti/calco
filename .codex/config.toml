@@ -1,0 +1,9 @@
+# Codex loads project configuration when this repository is trusted.
+# Keep these servers aligned with .mcp.json for the Claude Code adapter.
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest", "--headless"]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
